@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
+    "typeRoots": [
+      "node_modules/@types", // 默认值
+      "src/types"
+   ],
     "baseUrl": "./",  // 这里需要配置
     "paths": {
+      "@": ["src"],
       "@/*": ["./src/*"]  // 这里需要配置
     },
     "target": "esnext",
@@ -14,8 +19,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
-    "skipLibCheck": true
+    "lib": ["esnext", "dom"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
