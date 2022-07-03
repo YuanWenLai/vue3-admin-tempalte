@@ -7,7 +7,8 @@
     "baseUrl": "./",  // 这里需要配置
     "paths": {
       "@": ["src"],
-      "@/*": ["./src/*"]  // 这里需要配置
+      "@/*": ["./src/*"],  // 这里需要配置
+      "~/*": ["typings/*"]
     },
     "target": "esnext",
     "useDefineForClassFields": true,
@@ -21,6 +22,6 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","./auto-imports.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
