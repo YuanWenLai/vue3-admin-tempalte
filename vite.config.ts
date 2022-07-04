@@ -2,6 +2,7 @@ import { defineConfig, normalizePath  } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path  from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 
 // 全局 scss 文件的路径
@@ -10,6 +11,11 @@ const variablePath = normalizePath(path.resolve('./src/styles/variables.scss'));
 console.log(3232,variablePath)
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    //fix "path" module issue
+    'process.platform': null,
+    'process.version': null,
+  },
   resolve: {
     alias: {  // 这里就是需要配置resolve里的别名
       "@": path.join(__dirname, "./src"), // path记得引入
@@ -27,6 +33,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    vueJsx(),
     AutoImport({
       imports: [
         'vue',

@@ -1,40 +1,90 @@
 <template>
+  <div id="Sidebar" class="reset-menu-style">
+    <!--logo-->
+    <Logo v-if="settings.sidebarLogo" :collapse="!isCollapse" />
+    <!--router nav-->
+   <!--router nav-->
     <el-scrollbar>
-    <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
+      <el-menu
+        class="el-menu-vertical"
+        :default-active="activeMenu"
+        :collapse="!isCollapse"
+        :unique-opened="false"
+        :collapse-transition="false"
+        :background-color="scssJson.menuBg"
+        :text-color="scssJson.menuText"
+        :active-text-color="scssJson.menuActiveText"
+        mode="vertical"
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><location /></el-icon>
-            <span>Navigator One</span>
-          </template>
-          <el-menu-item-group title="Group One">
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item one</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
-          <span>Navigator Two</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
+        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
-  </el-scrollbar>
+    </el-scrollbar>
+  </div>
 </template>
+
+
+<script setup lang="ts">
+import Logo from './Logo.vue'
+import SidebarItem from './SidebarItem.vue'
+//导入配置文件
+
+const appStore = useAppStore()
+const settings = computed(() => {
+  return appStore.settings
+})
+
+const route = useRoute()
+const permissionStore = usePermissionStore()
+const routes = computed(() => {
+  return permissionStore.routes
+})
+
+console.log(213,routes)
+const isCollapse = computed(() => {
+  return appStore.sidebar.opened
+})
+
+//change  scss variable to js
+const dillScssExportToJson = (scssExportJson: any) => {
+  const jsonString = scssExportJson.replace(/:export\s*/, '').replace(/[\s+\r\n]/g, '')
+  const scssJson: ObjTy = {}
+  jsonString
+    .slice(1, jsonString.length - 2)
+    .split(';')
+    .forEach((fItem: any) => {
+      const arr = fItem.split(':')
+      scssJson[arr[0]] = arr[1]
+    })
+  return scssJson
+}
+
+//get scss variable
+import scssExportJson from '@/styles/variables-to-js.scss'
+import { ObjTy } from '~/common'
+import { useAppStore } from '@/store/app'
+import { usePermissionStore } from '@/store/permission'
+const scssJson = dillScssExportToJson(scssExportJson)
+const activeMenu = computed(() => {
+  const { meta, path } = route
+  // if set path, the sidebar will highlight the path you set
+  if (meta.activeMenu) {
+    return meta.activeMenu
+  }
+  return path
+})
+</script>
+
+<style lang="scss">
+.reset-menu-style {
+  .el-menu {
+    border-right: none;
+  }
+  .el-scrollbar__wrap {
+    padding-bottom: 10vh;
+  }
+}
+
+.el-menu-vertical {
+  width: $sideBarWidth;
+}
+</style>

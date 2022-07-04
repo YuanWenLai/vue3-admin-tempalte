@@ -1,18 +1,12 @@
 import { loginReq, logoutReq, getInfoReq } from '@/api/user'
 import { setToken, removeToken } from '@/utils/auth'
 import { ObjTy } from '~/common'
-import router, { constantRoutes, asyncRoutes } from '@/router'
+import router from '@/router'
 import { defineStore } from 'pinia'
-import { usePermissionStore } from '@/store/permission'
 import { useTagsViewStore } from '@/store/tagsView'
 
 const resetRouter = () => {
-  const asyncRouterNameArr: Array<any> = asyncRoutes.map((mItem) => mItem.name)
-  asyncRouterNameArr.forEach((name) => {
-    if (router.hasRoute(name)) {
-      router.removeRoute(name)
-    }
-  })
+  // todo: 跳去登录页router
 }
 
 export const useUserStore = defineStore('user', {
@@ -55,6 +49,7 @@ export const useUserStore = defineStore('user', {
     },
     // get user info
     getInfo() {
+      return {roles:['admin']}
       return new Promise((resolve, reject) => {
         getInfoReq()
           .then((response: ObjTy) => {
@@ -99,8 +94,6 @@ export const useUserStore = defineStore('user', {
         this.M_roles([])
         removeToken() // must remove  token  first
         resetRouter() // reset the router
-        const permissionStore = usePermissionStore()
-        permissionStore.M_isGetUserInfo(false)
         const tagsViewStore = useTagsViewStore()
         tagsViewStore.delAllViews()
         resolve(null)

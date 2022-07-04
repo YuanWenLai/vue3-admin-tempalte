@@ -1,4 +1,4 @@
-import request from '@/utils/axiosReq'
+import request from '@/utils/axios'
 import { ObjTy } from '~/common'
 
 export function loginReq(data: ObjTy) {

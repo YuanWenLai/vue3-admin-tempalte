@@ -1,6 +1,6 @@
 <template>
     <!-- layout:{{ useUserStoreVal.name }},{{reftest}} -->
-    <div  class="test layout-wrapper">
+    <div  class="layout-wrapper">
     <!--left side-->
     <Sidebar  class="sidebar-container" />
     <!--right container-->

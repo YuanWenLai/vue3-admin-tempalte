@@ -5,6 +5,7 @@ import router from './router'
 import './styles/index.scss'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import './permission.ts'
 
 
  // 创建vue实例
