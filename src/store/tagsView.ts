@@ -1,4 +1,6 @@
+import defaultSettings from '@/settings'
 import { defineStore } from 'pinia'
+import { ObjTy, SettingTy } from '~/common'
 import setting from '@/settings'
 import { RouteItemTy } from '~/router'
 export const useTagsViewStore = defineStore('tagsView', {
@@ -16,7 +18,7 @@ export const useTagsViewStore = defineStore('tagsView', {
    *封装处理数据的函数（业务逻辑)：修改数据
    */
   actions: {
-    ADD_VISITED_VIEW(view: Object) {
+    ADD_VISITED_VIEW(view) {
       this.$patch((state) => {
         if (state.visitedViews.some((v) => v.path === view.path)) return
         //limit num

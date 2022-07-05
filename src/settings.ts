@@ -20,7 +20,7 @@ interface SettingTy {
 }
 
 const setting: SettingTy = {
-  title: 'Vue3 Admin Ts',
+  title: 'Vue3 Admin Tempalte',
   /**
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar

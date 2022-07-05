@@ -10,17 +10,20 @@
        meta: {
            title: '首页',
            keepAlive: true,
-           requireAuth: true
+           requireAuth: true,
+           elSvgIcon: 'Fold'
        },
        component: Layout,
        children: [
         {
           path: '/home',
+          name: 'Home',
           meta: {
             title: '主页',
             keepAlive: true,
-            requireAuth: false
-        },
+            requireAuth: false,
+            elSvgIcon: 'Aim'
+          },
           component: () => import('@/pages/home/index.vue')
         },
         {
@@ -29,7 +32,8 @@
           meta: {
               title: '登录',
               keepAlive: true,
-              requireAuth: false
+              requireAuth: false,
+              elSvgIcon: 'Baseball'
           },
           component: () => import('@/pages/login/index.vue')
         },
@@ -51,7 +55,7 @@ export const asyncRoutes: RouterTy = [
     name: 'Permission',
     meta: {
       title: 'Permission',
-      icon: 'lock',
+      elSvgIcon: 'Aim',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -60,8 +64,8 @@ export const asyncRoutes: RouterTy = [
         component: () => import('@/pages/permission/index.vue'),
         name: 'Permission',
         meta: {
-          title: 'role Index'
-          //roles: ['admin'] // or you can only set roles in sub nav
+          title: 'role Index',
+          icon: 'lock',
         }
       },
       {

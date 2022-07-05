@@ -1,12 +1,11 @@
 <template>
-    <!-- layout:{{ useUserStoreVal.name }},{{reftest}} -->
-    <div  class="layout-wrapper">
+    <div :class="classObj" class="layout-wrapper">
     <!--left side-->
-    <Sidebar  class="sidebar-container" />
+    <Sidebar v-if="settings.showLeftMenu" class="sidebar-container" />
     <!--right container-->
     <div class="main-container">
-      <Navbar />
-      <TagsView />
+      <Navbar v-if="settings.showTopNavbar" />
+      <TagsView v-if="settings.showTagsView" />
       <AppMain />
     </div>
   </div>
@@ -19,11 +18,23 @@ export default {
 </script>
 <script setup lang="ts">
 import { Sidebar, Navbar, AppMain, TagsView } from './components'
-import { useUserStore } from '@/store/user'
+import ResizeHook from './hook/ResizeHandler'
+import { useAppStore } from '@/store/app'
 
-const useUserStoreVal = useUserStore()
+const appStore = useAppStore()
+const opened = computed(() => {
+  return appStore.sidebar.opened
+})
 
-const reftest = ref(123)
+const settings = computed(() => {
+  return appStore.settings
+})
+const classObj = computed(() => {
+  return {
+    closeSidebar: !opened.value,
+    hideSidebar: !settings.value.showLeftMenu
+  }
+})
 </script>
 
 
